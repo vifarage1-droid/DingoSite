@@ -4,439 +4,984 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Dingo | Creche de cães e hotel - Asa Norte, Brasília</title>
-    <!-- Fontes: Bricolage Grotesque + Open Sans -->
-    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Open+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Font Awesome 6 -->
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --azul-dia:     #2a6bdd;
+            --amarelo:      #ffc864;
+            --azul-noite:   #001e64;
+            --vermelho:     #bc3b1d;
+            --fundo:        #fffaf2;
+            --fundo2:       #fff5e8;
+            --sombra:       0 12px 36px rgba(0,30,100,0.12);
         }
+
+        html { scroll-behavior: smooth; }
 
         body {
             font-family: 'Open Sans', sans-serif;
-            background: #fef9f2;
-            color: #1e2a3e;
-            scroll-behavior: smooth;
+            background: var(--fundo);
+            color: var(--azul-noite);
         }
 
-        h1, h2, h3, .logo-text, .btn-social span {
+        h1, h2, h3, h4, .brand {
             font-family: 'Bricolage Grotesque', sans-serif;
         }
 
-        /* Paleta de cores */
-        :root {
-            --azul-dia: #2a6bdd;
-            --amarelo-dingo: #ffc864;
-            --azul-noite: #001e64;
-            --vermelho-terra: #bc3b1d;
-            --fundo-claro: #fffaf2;
-        }
-
-        /* Container geral */
         .container {
-            max-width: 1280px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 0 28px;
+            padding: 0 32px;
         }
 
-        /* Cada tela com espaçamento */
-        .screen {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 3rem 0;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
+        section { padding: 80px 0; }
+
+        .section-title {
+            font-family: 'Bricolage Grotesque', sans-serif;
+            font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+            font-weight: 800;
+            color: var(--azul-noite);
+            margin-bottom: 0.35em;
+            line-height: 1.1;
+        }
+        .section-title .accent { color: var(--azul-dia); }
+        .section-eyebrow {
+            font-family: 'Bricolage Grotesque', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--vermelho);
+            margin-bottom: 0.6rem;
+            display: block;
+        }
+        .title-bar {
+            width: 56px;
+            height: 5px;
+            background: var(--amarelo);
+            border-radius: 4px;
+            margin-bottom: 1.6rem;
         }
 
-        /* PRIMEIRA TELA - FULLSCREEN COM IMAGEM DE FUNDO */
-        .hero-fullscreen {
+        #hero {
             position: relative;
             min-height: 100vh;
-            width: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
-            text-align: center;
+            overflow: hidden;
+            background: var(--azul-noite);
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background-image: url('https://vifarage1-droid.github.io/DingoSite/Dingo_Horizontal_Preto.png');
             background-size: cover;
             background-position: center;
-            background-repeat: no-repeat;
-            /* Placeholder: você trocará pela sua foto */
-            background-image: url(Dingo_Icone_Azul.png);
         }
-        /* Para garantir que quando a imagem real for colocada, cubra tudo */
-        .hero-fullscreen {
-            background-size: cover;
+        .hero-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(160deg,
+                rgba(0,30,100,0.72) 0%,
+                rgba(0,30,100,0.45) 55%,
+                rgba(0,30,100,0.65) 100%);
         }
-        .hero-overlay {
-            background: rgba(0, 30, 100, 0.55); /* azul-noite com transparência */
+
+        .hero-corner-tl {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 320px;
+            height: 320px;
+            overflow: hidden;
+            z-index: 2;
+            pointer-events: none;
+        }
+        .hero-corner-tl img,
+        .hero-corner-tl .corner-placeholder {
             width: 100%;
-            min-height: 100vh;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.28;
+            mix-blend-mode: luminosity;
+        }
+        .corner-placeholder {
+            background: rgba(255,200,100,0.18);
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
+            gap: 6px;
+            border: 2.5px dashed rgba(255,200,100,0.45);
+            font-family: 'Open Sans', sans-serif;
+            font-size: 0.72rem;
+            color: rgba(255,255,255,0.7);
+            font-weight: 600;
+            text-align: center;
+            padding: 8px;
+        }
+        .corner-placeholder i { font-size: 2.2rem; color: rgba(255,200,100,0.6); }
+
+        .hero-corner-br {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 320px;
+            height: 320px;
+            overflow: hidden;
+            z-index: 2;
+            pointer-events: none;
+        }
+        .hero-corner-br img,
+        .hero-corner-br .corner-placeholder {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.28;
+            mix-blend-mode: luminosity;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
             padding: 2rem;
         }
         .hero-logo img {
-            max-width: 260px;
-            width: 90%;
-            margin-bottom: 1rem;
-            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
+            max-width: 240px;
+            width: 80%;
+            margin-bottom: 1.4rem;
+            filter: brightness(0) invert(1) drop-shadow(0 3px 14px rgba(0,0,0,0.4));
         }
         .hero-title {
-            font-size: 5rem;
+            font-family: 'Bricolage Grotesque', sans-serif;
+            font-size: clamp(3rem, 8vw, 6.5rem);
             font-weight: 800;
-            color: white;
-            text-shadow: 0 4px 12px rgba(0,0,0,0.3);
-            letter-spacing: -0.02em;
+            color: #ffffff;
+            letter-spacing: -0.03em;
+            line-height: 0.95;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.35);
         }
-        .hero-sub {
-            font-size: 1.8rem;
-            font-weight: 600;
-            color: var(--amarelo-dingo);
-            background: rgba(0,0,0,0.4);
+        .hero-pill {
             display: inline-block;
-            padding: 0.4rem 1.6rem;
-            border-radius: 60px;
-            backdrop-filter: blur(6px);
-            margin-top: 0.5rem;
             font-family: 'Bricolage Grotesque', sans-serif;
-        }
-        @media (max-width: 700px) {
-            .hero-title { font-size: 3rem; }
-            .hero-sub { font-size: 1.2rem; }
-        }
-
-        /* títulos gerais */
-        h2 {
-            font-size: 2.5rem;
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
             font-weight: 700;
-            margin-bottom: 1.5rem;
             color: var(--azul-noite);
-            border-left: 6px solid var(--amarelo-dingo);
-            padding-left: 1rem;
-            font-family: 'Bricolage Grotesque', sans-serif;
-        }
-
-        /* cards e elementos emocionais */
-        .emotional-card {
-            background: #fff2e6;
-            border-radius: 48px;
-            padding: 2rem;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-            display: flex;
-            flex-wrap: wrap;
-            gap: 2rem;
-            align-items: center;
-        }
-        .emotional-text {
-            flex: 2;
-        }
-        .emotional-illustration {
-            flex: 1;
-            min-width: 180px;
-            text-align: center;
-        }
-        .illustration-placeholder {
-            background: #ffecd9;
-            border-radius: 40px;
-            padding: 1rem;
-            display: inline-block;
-            width: 100%;
-            text-align: center;
-            border: 2px dashed var(--amarelo-dingo);
-        }
-        .illustration-placeholder i {
-            font-size: 5rem;
-            color: var(--azul-dia);
-        }
-        .studies-badge {
-            background: white;
-            border-radius: 28px;
-            padding: 1rem;
+            background: var(--amarelo);
+            padding: 0.45em 1.6em;
+            border-radius: 60px;
             margin-top: 1rem;
-            border-left: 4px solid var(--vermelho-terra);
+            letter-spacing: 0.01em;
+        }
+        .hero-location {
+            color: rgba(255,255,255,0.82);
+            font-size: 1rem;
+            font-weight: 500;
+            margin-top: 0.8rem;
+            letter-spacing: 0.04em;
         }
 
-        /* galeria de fotos do local */
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 1.8rem;
-            margin: 2rem 0;
-        }
-        .photo-placeholder {
-            background: #e6dfd5;
-            border-radius: 32px;
-            min-height: 240px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            border: 2px dashed var(--azul-dia);
-            color: var(--azul-noite);
-            font-weight: 600;
-            text-align: center;
-            padding: 1rem;
-        }
-        .photo-placeholder i {
-            font-size: 3rem;
-            color: var(--azul-dia);
-        }
-
-        /* hotel features */
-        .hotel-features {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.8rem;
-            margin: 1.5rem 0;
-        }
-        .feature {
-            background: #fef5ed;
-            border-radius: 32px;
-            padding: 1.4rem;
-            flex: 1;
-            min-width: 180px;
-            text-align: center;
-            transition: 0.2s;
-            border-bottom: 4px solid var(--amarelo-dingo);
-        }
-        .feature i {
-            font-size: 2.8rem;
-            color: var(--azul-dia);
-        }
-        .hotel-illustration {
-            background: #fff3e8;
-            border-radius: 48px;
-            margin: 1rem 0;
-            padding: 1rem 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-        }
-
-        /* contato */
-        .contact-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 2rem;
-            background: #f7efe7;
-            border-radius: 48px;
-            padding: 2rem;
-        }
-        .map-link {
-            background: var(--azul-dia);
-            color: white;
-            padding: 0.6rem 1.2rem;
-            border-radius: 40px;
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        /* botões sociais fixos GIGANTES */
         .fixed-social {
             position: fixed;
             bottom: 28px;
             right: 28px;
             display: flex;
             flex-direction: column;
-            gap: 18px;
-            z-index: 1000;
+            gap: 16px;
+            z-index: 9999;
         }
         .social-fixed-btn {
-            width: 76px;
-            height: 76px;
-            border-radius: 60px;
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 12px 24px rgba(0,0,0,0.25);
-            transition: 0.2s;
+            box-shadow: 0 10px 28px rgba(0,0,0,0.28);
+            transition: transform 0.2s, box-shadow 0.2s;
             text-decoration: none;
-            font-size: 3rem;
+            font-size: 2.6rem;
+            color: white;
         }
-        .social-fixed-btn.whats { background: #25D366; color: white; }
-        .social-fixed-btn.insta { background: radial-gradient(circle at 30% 110%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); color: white; }
-        .social-fixed-btn:hover { transform: scale(1.08); }
+        .social-fixed-btn.whats { background: #25D366; }
+        .social-fixed-btn.insta {
+            background: radial-gradient(circle at 30% 110%,
+                #fdf497 0%, #fdf497 5%, #fd5949 45%,
+                #d6249f 60%, #285AEB 90%);
+        }
+        .social-fixed-btn:hover { transform: scale(1.1); box-shadow: 0 16px 36px rgba(0,0,0,0.35); }
 
-        @media (max-width: 650px) {
-            .social-fixed-btn { width: 60px; height: 60px; font-size: 2.4rem; }
-            .container { padding: 0 16px; }
-            h2 { font-size: 1.8rem; }
+        @media (max-width: 600px) {
+            .social-fixed-btn { width: 58px; height: 58px; font-size: 2.1rem; }
+            .hero-corner-tl, .hero-corner-br { width: 200px; height: 200px; }
         }
-        footer {
+
+        #ciencia { background: var(--fundo2); }
+        .ciencia-wrap {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 52px;
+            align-items: center;
+        }
+        @media (max-width: 800px) {
+            .ciencia-wrap { grid-template-columns: 1fr; gap: 32px; }
+        }
+
+        .ciencia-text p {
+            font-size: 1.1rem;
+            line-height: 1.75;
+            color: #2d3b55;
+            margin-bottom: 1rem;
+        }
+        .ciencia-text strong { color: var(--azul-dia); }
+
+        .study-badge {
+            background: white;
+            border-left: 5px solid var(--vermelho);
+            border-radius: 0 20px 20px 0;
+            padding: 1rem 1.4rem;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            box-shadow: var(--sombra);
+            margin-top: 1.2rem;
+        }
+        .study-badge i { color: var(--vermelho); margin-right: 6px; }
+
+        .love-note {
+            background: linear-gradient(135deg, var(--amarelo) 0%, #ffde9a 100%);
+            color: var(--azul-noite);
+            border-radius: 28px;
+            padding: 1rem 1.6rem;
+            font-family: 'Bricolage Grotesque', sans-serif;
+            font-weight: 700;
+            font-size: 1.05rem;
             text-align: center;
-            padding: 1.5rem;
-            font-size: 0.8rem;
-            color: #7a5c3e;
+            margin-top: 1.4rem;
         }
-        .btn-whats-small, .btn-insta-small {
+
+        .ciencia-img-box {
+            position: relative;
+            border-radius: 40px;
+            overflow: hidden;
+            min-height: 440px;
+            background: #dde8f8;
+            box-shadow: var(--sombra);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .ciencia-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            inset: 0;
+        }
+        .img-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 2rem;
+            text-align: center;
+            border: 3px dashed var(--azul-dia);
+            border-radius: 40px;
+            width: 100%;
+            min-height: 440px;
+            color: var(--azul-noite);
+        }
+        .img-placeholder i { font-size: 5rem; color: var(--azul-dia); opacity: 0.6; }
+        .img-placeholder p { font-weight: 700; font-size: 1rem; }
+        .img-placeholder small { font-size: 0.8rem; opacity: 0.65; }
+
+        .ciencia-img-box .img-tag {
+            position: absolute;
+            bottom: 18px;
+            left: 18px;
+            background: var(--azul-noite);
+            color: white;
+            font-family: 'Bricolage Grotesque', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            padding: 0.35em 1em;
+            border-radius: 40px;
+            z-index: 2;
+            opacity: 0.85;
+        }
+
+        #galeria { background: var(--azul-noite); }
+        #galeria .section-title { color: #fff; }
+        #galeria .section-eyebrow { color: var(--amarelo); }
+        #galeria .title-bar { background: var(--amarelo); }
+
+        .slideshow-container {
+            position: relative;
+            border-radius: 40px;
+            overflow: hidden;
+            width: 100%;
+            max-width: 960px;
+            margin: 0 auto;
+            aspect-ratio: 16/9;
+            background: rgba(255,255,255,0.05);
+        }
+        .slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+        .slide.active { opacity: 1; }
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .slide .slide-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            border: 3px dashed rgba(255,200,100,0.5);
+            color: rgba(255,255,255,0.75);
+            text-align: center;
+            padding: 2rem;
+            font-family: 'Open Sans', sans-serif;
+        }
+        .slide .slide-placeholder i { font-size: 4rem; color: var(--amarelo); opacity: 0.7; }
+        .slide .slide-placeholder p { font-weight: 700; font-size: 1rem; }
+        .slide .slide-placeholder small { font-size: 0.78rem; opacity: 0.6; }
+
+        .slide-caption {
+            position: absolute;
+            bottom: 18px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,30,100,0.8);
+            color: var(--amarelo);
+            font-family: 'Bricolage Grotesque', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            padding: 0.4em 1.4em;
+            border-radius: 40px;
+            white-space: nowrap;
+            z-index: 5;
+            backdrop-filter: blur(6px);
+        }
+
+        .slide-dots {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.28);
+            transition: background 0.3s, transform 0.3s;
+            cursor: pointer;
+        }
+        .dot.active { background: var(--amarelo); transform: scale(1.35); }
+
+        .slide-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 6;
+            background: rgba(0,30,100,0.6);
+            color: white;
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        .slide-nav:hover { background: rgba(0,30,100,0.9); }
+        .slide-nav.prev { left: 14px; }
+        .slide-nav.next { right: 14px; }
+
+        #hotel { background: var(--fundo); }
+
+        .hotel-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 52px;
+            align-items: start;
+        }
+        @media (max-width: 800px) {
+            .hotel-grid { grid-template-columns: 1fr; gap: 32px; }
+        }
+
+        .hotel-desc {
+            font-size: 1.1rem;
+            line-height: 1.75;
+            color: #2d3b55;
+            margin-bottom: 1.6rem;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 1.6rem;
+        }
+        @media (max-width: 560px) {
+            .features-grid { grid-template-columns: 1fr 1fr; }
+        }
+        .feat-card {
+            background: white;
+            border-radius: 24px;
+            padding: 1.2rem 1rem;
+            text-align: center;
+            border-bottom: 4px solid var(--amarelo);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+        }
+        .feat-card i { font-size: 2.2rem; color: var(--azul-dia); display: block; margin-bottom: 0.5rem; }
+        .feat-card h4 {
+            font-family: 'Bricolage Grotesque', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--azul-noite);
+            margin-bottom: 0.2rem;
+        }
+        .feat-card small { font-size: 0.75rem; color: #7a8fa8; }
+
+        .reserva-banner {
+            background: linear-gradient(135deg, var(--azul-dia) 0%, #1a50b0 100%);
+            color: white;
+            border-radius: 24px;
+            padding: 1rem 1.4rem;
+            font-family: 'Bricolage Grotesque', sans-serif;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        .reserva-banner i { color: var(--amarelo); margin-right: 8px; }
+
+        .hotel-slideshow {
+            position: relative;
+            border-radius: 40px;
+            overflow: hidden;
+            width: 100%;
+            aspect-ratio: 4/5;
+            background: #dde8f8;
+            box-shadow: var(--sombra);
+        }
+
+        #contato { background: var(--fundo2); }
+
+        .contact-wrap {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: start;
+        }
+        @media (max-width: 800px) {
+            .contact-wrap { grid-template-columns: 1fr; gap: 32px; }
+        }
+
+        .contact-info-block {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .contact-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 1rem 1.2rem;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.05);
+        }
+        .contact-row i {
+            font-size: 1.4rem;
+            color: var(--azul-dia);
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        .contact-row .cr-label {
+            font-family: 'Bricolage Grotesque', sans-serif;
+            font-weight: 700;
+            font-size: 0.78rem;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            color: var(--vermelho);
+            margin-bottom: 3px;
+        }
+        .contact-row .cr-value {
+            font-size: 0.95rem;
+            color: var(--azul-noite);
+            font-weight: 500;
+        }
+
+        .hours-box {
+            background: var(--azul-noite);
+            color: white;
+            border-radius: 24px;
+            padding: 1.4rem 1.6rem;
+        }
+        .hours-box h4 {
+            font-family: 'Bricolage Grotesque', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--amarelo);
+            margin-bottom: 0.8rem;
+        }
+        .hours-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.4rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem;
+        }
+        .hours-row:last-child { border-bottom: none; }
+        .hours-row .day { opacity: 0.75; }
+        .hours-row .time { font-weight: 600; color: var(--amarelo); }
+
+        .cta-btns {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 16px;
+        }
+        .btn-w, .btn-i, .btn-map {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: var(--azul-dia);
-            padding: 0.5rem 1.2rem;
+            padding: 0.65em 1.4em;
             border-radius: 40px;
+            font-family: 'Bricolage Grotesque', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
             text-decoration: none;
-            color: white;
-            font-weight: 600;
-            margin: 0.3rem;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
-        .btn-insta-small { background: #d6249f; }
+        .btn-w  { background: #25D366; color: white; }
+        .btn-i  { background: #d6249f; color: white; }
+        .btn-map { background: var(--azul-dia); color: white; }
+        .btn-w:hover, .btn-i:hover, .btn-map:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+        }
+
+        .contact-big-photo {
+            position: relative;
+            border-radius: 40px;
+            overflow: hidden;
+            width: 100%;
+            min-height: 420px;
+            background: #dde8f8;
+            box-shadow: var(--sombra);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .contact-big-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            inset: 0;
+        }
+
+        .contact-photo-row {
+            margin-top: 56px;
+        }
+        .contact-photo-row .section-title { font-size: 1.4rem; margin-bottom: 1.2rem; }
+
+        .contact-big-img {
+            width: 100%;
+            border-radius: 40px;
+            overflow: hidden;
+            min-height: 420px;
+            background: #dde8f8;
+            box-shadow: var(--sombra);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .contact-big-img img {
+            width: 100%;
+            min-height: 420px;
+            object-fit: cover;
+            display: block;
+        }
+
+        footer {
+            background: var(--azul-noite);
+            color: rgba(255,255,255,0.65);
+            text-align: center;
+            padding: 2.4rem 1.6rem;
+            font-size: 0.82rem;
+            line-height: 1.9;
+        }
+        footer strong { color: var(--amarelo); }
+        footer .paw {
+            font-size: 1.6rem;
+            display: block;
+            margin-bottom: 0.4rem;
+        }
     </style>
 </head>
 <body>
 
-<!-- ÍCONES FLUTUANTES GIGANTES (WHATSAPP + INSTAGRAM EM TODAS AS TELAS) -->
 <div class="fixed-social">
-    <a href="https://wa.me/5561996610077?text=Olá!%20Quero%20saber%20mais%20sobre%20a%20creche%20e%20hotel%20Dingo!" 
-       target="_blank" class="social-fixed-btn whats" rel="noopener noreferrer">
+    <a href="https://wa.me/5561996610077?text=Olá!%20Quero%20saber%20mais%20sobre%20a%20creche%20e%20hotel%20Dingo!"
+       target="_blank" class="social-fixed-btn whats" rel="noopener noreferrer"
+       aria-label="WhatsApp Dingo">
         <i class="fab fa-whatsapp"></i>
     </a>
-    <a href="https://www.instagram.com/dingopet/" target="_blank" class="social-fixed-btn insta" rel="noopener noreferrer">
+    <a href="https://www.instagram.com/dingopet/" target="_blank" class="social-fixed-btn insta"
+       rel="noopener noreferrer" aria-label="Instagram @dingopet">
         <i class="fab fa-instagram"></i>
     </a>
 </div>
 
-<!-- PRIMEIRA TELA: FOTO FULLSCREEN (VOCÊ SUBSTITUIRÁ A IMAGEM DE FUNDO) -->
-<section class="hero-fullscreen" style="background-image: url('https://placehold.co/1920x1080/2a6bdd/white?text=SUA+FOTO+AQUI+-+Fundo+do+Dingo');">
-    <div class="hero-overlay">
+<section id="hero">
+    <div class="hero-bg"></div>
+
+    <div class="hero-corner-tl">
+        <img src="https://vifarage1-droid.github.io/DingoSite/Bola_Beisebol.png" alt="">
+    </div>
+
+    <div class="hero-corner-br">
+        <img src="https://vifarage1-droid.github.io/DingoSite/Bola_brinquedo.png" alt="">
+    </div>
+
+    <div class="hero-content">
         <div class="hero-logo">
-            <!-- Logo Dingo (horizontal ou vertical) -->
-            <img src="Dingo_Horizontal_Preto.png" alt="Dingo Logo" onerror="this.src='Dingo_Vertical_Preto.png'; this.onerror=null;">
+            <img src="https://vifarage1-droid.github.io/DingoSite/Dingo_Horizontal_Preto.png" alt="Dingo"
+                 onerror="this.style.display='none'">
         </div>
         <div class="hero-title">Dingo</div>
-        <div class="hero-sub">Creche de cães e hotel</div>
-        <p style="color: white; margin-top: 1rem; font-weight: 500; text-shadow: 0 1px 4px black;">🐕 Asa Norte, Brasília – DF</p>
+        <div class="hero-pill">Creche de cães e hotel</div>
+        <p class="hero-location">🐕 Asa Norte · Brasília – DF</p>
     </div>
 </section>
 
-<div class="container">
-    <!-- SEGUNDA TELA: EXPLICAÇÃO + ESTUDOS + ESPAÇO PARA ILUSTRAÇÃO DE CACHORRO -->
-    <section class="screen" id="tela2">
-        <h2>🐾 Por que creche faz bem? Ciência & Amor</h2>
-        <div class="emotional-card">
-            <div class="emotional-text">
-                <div style="font-size: 1.2rem; font-weight: 600;">
-                    <i class="fas fa-clock" style="color: var(--vermelho-terra);"></i> Você passa 12 horas fora trabalhando?
-                </div>
-                <p style="margin: 0.8rem 0;">Seu cão fica sozinho, desolado, sem estímulos e sem amigos… O tédio e a solidão causam ansiedade e estresse. <strong style="color: var(--azul-dia);">No Dingo ele ganha diversão, liberdade e afeto todos os dias.</strong></p>
-                <div class="studies-badge">
-                    <i class="fas fa-graduation-cap"></i> <strong>Estudos comprovam:</strong> cães em creches têm 43% menos estresse por separação (Universidade de Helsinque). Socialização diária = cachorro mais equilibrado e feliz.
-                </div>
-            </div>
-            <div class="emotional-illustration">
-                <div class="illustration-placeholder">
-                    <i class="fas fa-dog"></i>
-                    <p style="margin-top: 8px; font-weight: bold;">🐕 Seu melhor amigo</p>
-                    <small>coloque aqui a ilustração do cachorro</small>
-                    <!-- Você substituirá essa div inteira por uma imagem real ou ilustração -->
-                </div>
-            </div>
-        </div>
-        <p style="margin-top: 1rem; background: #fff0e0; padding: 1rem; border-radius: 28px; text-align: center;">
-            ❤️ Enquanto você realiza seus sonhos, seu pet realiza os dele no Dingo! ❤️
-        </p>
-    </section>
+<section id="ciencia">
+    <div class="container">
+        <span class="section-eyebrow">🐾 Bem-estar canino</span>
+        <h2 class="section-title">Por que creche faz bem?<br><span class="accent">Ciência & Amor</span></h2>
+        <div class="title-bar"></div>
 
-    <!-- TERCEIRA TELA: FOTOS DO LOCAL (espaço para você colocar as imagens) -->
-    <section class="screen" id="tela3">
-        <h2>📸 Conheça o espaço Dingo</h2>
-        <p><i class="fas fa-camera"></i> Aqui você irá adicionar as fotos do hotel, creche, áreas de lazer e banho & tosa.</p>
-        <div class="gallery">
-            <!-- Placeholders - troque por <img class="gallery-img" src="sua-foto.jpg"> -->
-            <div class="photo-placeholder">
-                <i class="fas fa-tree"></i>
-                <p>🌿 Área externa</p>
-                <small>adicione sua foto</small>
-            </div>
-            <div class="photo-placeholder">
-                <i class="fas fa-bed"></i>
-                <p>🛏️ Suíte hotel</p>
-                <small>adicione sua foto</small>
-            </div>
-            <div class="photo-placeholder">
-                <i class="fas fa-water"></i>
-                <p>🚿 Banho & tosa</p>
-                <small>adicione sua foto</small>
-            </div>
-            <div class="photo-placeholder">
-                <i class="fas fa-paw"></i>
-                <p>🐕 Creche & brincadeiras</p>
-                <small>adicione sua foto</small>
-            </div>
-        </div>
-        <p style="font-size: 0.85rem; text-align: center;">⭐ Dica: Substitua cada .photo-placeholder por uma tag &lt;img class="gallery-img" src="seu-arquivo.jpg"&gt;. As imagens ficarão no formato redondo quadrado e lindo.</p>
-    </section>
+        <div class="ciencia-wrap">
+            <div class="ciencia-text">
+                <p>
+                    <strong>Você passa 12 horas fora trabalhando?</strong> Seu cão fica sozinho,
+                    desolado, sem estímulos e sem amigos. O tédio e a solidão causam ansiedade
+                    e estresse real.
+                </p>
+                <p>
+                    No Dingo ele ganha <strong>diversão, liberdade e afeto todos os dias</strong>
+                    — e você trabalha com a consciência tranquila.
+                </p>
 
-    <!-- QUARTA TELA: FALANDO DO HOTEL + ESPAÇO PARA ILUSTRAÇÃO DE CACHORRO -->
-    <section class="screen" id="tela4">
-        <h2>🏨 Hotel Dingo – A casa do seu pet</h2>
-        <div class="hotel-illustration">
-            <div style="flex:2;">
-                <p style="font-size: 1.1rem;">Viagens, trabalho noturno ou imprevistos? Nosso hotel oferece conforto 24h, monitoramento, alimentação supervisionada e muito carinho. <strong>Seu cão nunca se sentirá sozinho</strong>, mesmo longe de casa.</p>
-                <div class="hotel-features">
-                    <div class="feature"><i class="fas fa-moon"></i> <h3>Suítes aconchegantes</h3><small>Climatizadas e seguras</small></div>
-                    <div class="feature"><i class="fas fa-hand-holding-heart"></i> <h3>Equipe afetiva</h3><small>Carinho 24h</small></div>
-                    <div class="feature"><i class="fas fa-shield-alt"></i> <h3>Segurança total</h3><small>Câmeras + veterinário parceiro</small></div>
+                <div class="study-badge">
+                    <i class="fas fa-graduation-cap"></i>
+                    <strong>Estudos comprovam:</strong> cães em creches têm 43% menos estresse por
+                    separação (Universidade de Helsinque). Socialização diária = cachorro mais
+                    equilibrado e feliz.
                 </div>
-            </div>
-            <div class="emotional-illustration" style="min-width: 180px;">
-                <div class="illustration-placeholder">
-                    <i class="fas fa-smile-beam"></i>
-                    <p>🐶 Ilustração do pet</p>
-                    <small>adicione imagem do cachorro feliz</small>
-                </div>
-            </div>
-        </div>
-        <div style="background: #FFE7D9; border-radius: 36px; padding: 1rem; margin-top: 1rem; text-align: center;">
-            <i class="fas fa-calendar-week"></i> <strong>Reservas recomendadas</strong> – Garanta a vaga do seu melhor amigo! Consulte via WhatsApp ou Instagram.
-        </div>
-    </section>
 
-    <!-- QUINTA TELA: LOCAL + INFORMAÇÕES DE CONTATO -->
-    <section class="screen" id="tela5">
-        <h2>📍 Localização & Contato</h2>
-        <div class="contact-grid">
-            <div style="flex:2">
-                <p><i class="fas fa-map-marker-alt" style="color: var(--vermelho-terra);"></i> <strong>Endereço:</strong> Q SHCGN, CR, QUADRA 710/711, BLOCO G, LOJA 33 – Asa Norte, Brasília/DF</p>
-                <p><i class="fas fa-phone-alt"></i> <strong>Telefones:</strong> (61) 3245-9200 | (61) 98534-0007</p>
-                <p><i class="fab fa-whatsapp" style="color:#25D366;"></i> <strong>WhatsApp:</strong> (61) 99661-0077</p>
-                <p><i class="fab fa-instagram"></i> <strong>Instagram:</strong> @dingopet</p>
-                <div style="margin-top: 1rem;">
-                    <a href="https://www.google.com/maps/search/?api=1&query=SHCGN+Quadra+710%2F711+Bloco+G+Loja+33+Brasília" target="_blank" class="map-link"><i class="fas fa-directions"></i> Abrir no Google Maps</a>
-                </div>
-                <div style="margin-top: 1rem;">
-                    <a href="https://wa.me/5561996610077?text=Quero%20agendar%20uma%20visita%20ao%20Dingo!" target="_blank" class="btn-whats-small"><i class="fab fa-whatsapp"></i> Fale conosco</a>
-                    <a href="https://www.instagram.com/dingopet/" target="_blank" class="btn-insta-small"><i class="fab fa-instagram"></i> Siga @dingopet</a>
+                <div class="love-note">
+                    ❤️ Enquanto você realiza seus sonhos,<br>seu pet realiza os dele no Dingo!
                 </div>
             </div>
-            <div style="flex:1; background: white; border-radius: 32px; padding: 1rem;">
-                <p><strong>⏰ Horário de funcionamento</strong><br>
-                🐕 Creche & Banho: seg–sex 7h–19h<br>
-                🧴 Sábado: 8h–16h<br>
-                🌙 Hotel: 24h (mediante reserva)</p>
-                <p><i class="fas fa-heart" style="color: var(--vermelho-terra);"></i> Cuidaréo – Nosso maior prazer</p>
+
+            <div class="ciencia-img-box">
+                <img src="https://vifarage1-droid.github.io/DingoSite/Dog_Brincando_Amarelo.png" alt="Cachorro feliz no Dingo">
+                <span class="img-tag">🐕 Vida boa no Dingo</span>
             </div>
         </div>
-    </section>
-    <footer>
-        <p>🐾 Dingo · Creche de cães e hotel · Amor e cuidado que seu pet merece</p>
-        <p>Asa Norte, Brasília-DF · <strong>Ícones flutuantes sempre à mão</strong> (WhatsApp e Instagram)</p>
-        <p>© 2026 Dingo Pet – Liberdade, diversão e amigos todos os dias.</p>
-    </footer>
-</div>
+    </div>
+</section>
 
-<!-- instrução rápida para trocar imagens -->
+<section id="galeria">
+    <div class="container">
+        <span class="section-eyebrow">📸 Nosso espaço</span>
+        <h2 class="section-title">Conheça o espaço Dingo</h2>
+        <div class="title-bar"></div>
+
+        <div class="slideshow-container" id="galSlideshow">
+            <div class="slide active" data-label="🌿 Área externa">
+                <img src="https://vifarage1-droid.github.io/DingoSite/Foto%20Creche.jpeg" alt="Área externa">
+            </div>
+            <div class="slide" data-label="🛏️ Suíte hotel">
+                <img src="https://vifarage1-droid.github.io/DingoSite/Foto%20Banho.jpeg" alt="Suíte hotel">
+            </div>
+            <div class="slide" data-label="🚿 Banho & tosa">
+                <img src="https://vifarage1-droid.github.io/DingoSite/Foto%20Hotel.jpeg" alt="Banho e tosa">
+            </div>
+            <div class="slide" data-label="🐕 Creche & brincadeiras">
+                <img src="https://vifarage1-droid.github.io/DingoSite/Foto%20faixada.jpeg" alt="Creche e brincadeiras">
+            </div>
+            <div class="slide" data-label="🌞 Recreação">
+                <img src="https://vifarage1-droid.github.io/DingoSite/Foto%20recep%C3%A7%C3%A3o.jpeg" alt="Recepção">
+            </div>
+            <div class="slide" data-label="🦴 Espaço de convivência">
+                <img src="https://vifarage1-droid.github.io/DingoSite/Dog_Pulando_Amarelo.png" alt="Espaço de convivência">
+            </div>
+
+            <div class="slide-caption" id="galCaption">🌿 Área externa</div>
+
+            <button class="slide-nav prev" onclick="galPrev()" aria-label="Anterior">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="slide-nav next" onclick="galNext()" aria-label="Próximo">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+
+        <div class="slide-dots" id="galDots"></div>
+    </div>
+</section>
+
+<section id="hotel">
+    <div class="container">
+        <span class="section-eyebrow">🏨 Hospedagem</span>
+        <h2 class="section-title">Hotel Dingo –<br><span class="accent">A casa do seu pet</span></h2>
+        <div class="title-bar"></div>
+
+        <div class="hotel-grid">
+            <div>
+                <p class="hotel-desc">
+                    Viagens, trabalho noturno ou imprevistos? Nosso hotel oferece conforto 24h,
+                    monitoramento, alimentação supervisionada e muito carinho.
+                    <strong>Seu cão nunca se sentirá sozinho</strong>, mesmo longe de casa.
+                </p>
+
+                <div class="features-grid">
+                    <div class="feat-card">
+                        <i class="fas fa-moon"></i>
+                        <h4>Suítes aconchegantes</h4>
+                        <small>Climatizadas e seguras</small>
+                    </div>
+                    <div class="feat-card">
+                        <i class="fas fa-hand-holding-heart"></i>
+                        <h4>Equipe afetiva</h4>
+                        <small>Carinho 24h</small>
+                    </div>
+                    <div class="feat-card">
+                        <i class="fas fa-shield-alt"></i>
+                        <h4>Segurança total</h4>
+                        <small>Câmeras + vet parceiro</small>
+                    </div>
+                    <div class="feat-card">
+                        <i class="fas fa-utensils"></i>
+                        <h4>Alimentação</h4>
+                        <small>Supervisionada e cuidadosa</small>
+                    </div>
+                    <div class="feat-card">
+                        <i class="fas fa-video"></i>
+                        <h4>Monitoramento</h4>
+                        <small>Câmeras em tempo real</small>
+                    </div>
+                    <div class="feat-card">
+                        <i class="fas fa-paw"></i>
+                        <h4>Passeios diários</h4>
+                        <small>Exercício e diversão</small>
+                    </div>
+                </div>
+
+                <div class="reserva-banner">
+                    <i class="fas fa-calendar-check"></i>
+                    <strong>Reservas antecipadas recomendadas</strong> – Garanta a vaga do seu
+                    melhor amigo! Consulte via WhatsApp ou Instagram.
+                </div>
+            </div>
+
+            <div class="hotel-slideshow" id="hotelSlideshow">
+                <div class="slide active" data-label="🛏️ Suíte">
+                    <img src="https://vifarage1-droid.github.io/DingoSite/Foto%20Hotel.jpeg" alt="Suíte hotel">
+                </div>
+                <div class="slide" data-label="🌙 Descanso">
+                    <img src="https://vifarage1-droid.github.io/DingoSite/Foto%20faixada.jpeg" alt="Área de descanso">
+                </div>
+                <div class="slide" data-label="🐾 Brincadeira">
+                    <img src="https://vifarage1-droid.github.io/DingoSite/Foto%20Creche.jpeg" alt="Pets brincando">
+                </div>
+
+                <div class="slide-caption" id="hotelCaption">🛏️ Suíte</div>
+                <button class="slide-nav prev" onclick="hotelPrev()" aria-label="Anterior">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="slide-nav next" onclick="hotelNext()" aria-label="Próximo">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="slide-dots" id="hotelDots" style="margin-top: 12px;"></div>
+    </div>
+</section>
+
+<section id="contato">
+    <div class="container">
+        <span class="section-eyebrow">📍 Onde estamos</span>
+        <h2 class="section-title">Localização <span class="accent">&amp; Contato</span></h2>
+        <div class="title-bar"></div>
+
+        <div class="contact-wrap">
+            <div class="contact-info-block">
+                <div class="contact-row">
+                    <i class="fas fa-map-marker-alt" style="color:var(--vermelho);"></i>
+                    <div>
+                        <div class="cr-label">Endereço</div>
+                        <div class="cr-value">SHCGN CR Quadra 710/711, Bloco G, Loja 33<br>Asa Norte · Brasília / DF</div>
+                    </div>
+                </div>
+                <div class="contact-row">
+                    <i class="fas fa-phone-alt"></i>
+                    <div>
+                        <div class="cr-label">Telefone</div>
+                        <div class="cr-value">(61) 3245-9200 | (61) 98534-0007</div>
+                    </div>
+                </div>
+                <div class="contact-row">
+                    <i class="fab fa-whatsapp" style="color:#25D366;"></i>
+                    <div>
+                        <div class="cr-label">WhatsApp</div>
+                        <div class="cr-value">(61) 99661-0077</div>
+                    </div>
+                </div>
+                <div class="contact-row">
+                    <i class="fab fa-instagram" style="color:#d6249f;"></i>
+                    <div>
+                        <div class="cr-label">Instagram</div>
+                        <div class="cr-value">@dingopet</div>
+                    </div>
+                </div>
+
+                <div class="hours-box">
+                    <h4>⏰ Horário de funcionamento</h4>
+                    <div class="hours-row">
+                        <span class="day">Creche &amp; Banho – Seg a Sex</span>
+                        <span class="time">07h – 19h</span>
+                    </div>
+                    <div class="hours-row">
+                        <span class="day">Sábado</span>
+                        <span class="time">08h – 16h</span>
+                    </div>
+                    <div class="hours-row">
+                        <span class="day">Hotel</span>
+                        <span class="time">24h ✦ reserva</span>
+                    </div>
+                </div>
+
+                <div class="cta-btns">
+                    <a href="https://wa.me/5561996610077?text=Quero%20agendar%20uma%20visita%20ao%20Dingo!"
+                       target="_blank" class="btn-w" rel="noopener noreferrer">
+                        <i class="fab fa-whatsapp"></i> Fale conosco
+                    </a>
+                    <a href="https://www.instagram.com/dingopet/" target="_blank" class="btn-i"
+                       rel="noopener noreferrer">
+                        <i class="fab fa-instagram"></i> @dingopet
+                    </a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=SHCGN+Quadra+710%2F711+Bloco+G+Loja+33+Brasília"
+                       target="_blank" class="btn-map" rel="noopener noreferrer">
+                        <i class="fas fa-directions"></i> Google Maps
+                    </a>
+                </div>
+            </div>
+
+            <div class="contact-big-photo">
+                <img src="https://vifarage1-droid.github.io/DingoSite/Foto%20faixada.jpeg" alt="Fachada Dingo">
+            </div>
+        </div>
+
+        <div class="contact-photo-row">
+            <h3 class="section-title" style="font-size:1.4rem; margin-bottom:1.2rem;">
+                🐾 Um pedacinho do nosso dia a dia
+            </h3>
+            <div class="contact-big-img">
+                <img src="https://vifarage1-droid.github.io/DingoSite/Foto%20recep%C3%A7%C3%A3o.jpeg" alt="Recepção Dingo">
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<footer>
+    <span class="paw">🐾</span>
+    <strong>Dingo · Creche de cães e hotel</strong><br>
+    Amor e cuidado que seu pet merece · Asa Norte, Brasília – DF<br>
+    © 2026 Dingo Pet — Liberdade, diversão e amigos todos os dias.
+</footer>
+
 <script>
-    console.log("✅ Site Dingo pronto! Para trocar a imagem de fundo da primeira tela: edite o style da .hero-fullscreen e altere background-image. Para ilustrações e fotos da galeria, substitua os placeholders por tags <img>. As cores seguem a paleta: azul dia #2a6bdd, amarelo dingo #ffc864, azul noite #001e64, vermelho terra #bc3b1d. Fontes: Bricolage Grotesque e Open Sans.");
+function createSlideshow(slideshowId, dotsId, captionId, intervalMs) {
+    const container = document.getElementById(slideshowId);
+    if (!container) return;
+
+    const slides  = Array.from(container.querySelectorAll('.slide'));
+    const caption = document.getElementById(captionId);
+    const dotsEl  = document.getElementById(dotsId);
+    let current = 0;
+    let timer = null;
+
+    if (dotsEl) {
+        slides.forEach((_, i) => {
+            const d = document.createElement('div');
+            d.className = 'dot' + (i === 0 ? ' active' : '');
+            d.addEventListener('click', () => goTo(i));
+            dotsEl.appendChild(d);
+        });
+    }
+
+    function goTo(index) {
+        slides[current].classList.remove('active');
+        if (dotsEl) dotsEl.children[current].classList.remove('active');
+
+        current = (index + slides.length) % slides.length;
+
+        slides[current].classList.add('active');
+        if (dotsEl) dotsEl.children[current].classList.add('active');
+        if (caption) caption.textContent = slides[current].dataset.label || '';
+    }
+
+    function next() { goTo(current + 1); }
+    function prev() { goTo(current - 1); }
+
+    function startAuto() {
+        timer = setInterval(next, intervalMs);
+    }
+    function stopAuto() { clearInterval(timer); }
+
+    container.addEventListener('mouseenter', stopAuto);
+    container.addEventListener('mouseleave', startAuto);
+
+    startAuto();
+
+    return { next, prev, goTo };
+}
+
+const galShow   = createSlideshow('galSlideshow',   'galDots',   'galCaption',   3000);
+const hotelShow = createSlideshow('hotelSlideshow', 'hotelDots', 'hotelCaption', 3000);
+
+function galNext()   { if (galShow)   galShow.next(); }
+function galPrev()   { if (galShow)   galShow.prev(); }
+function hotelNext() { if (hotelShow) hotelShow.next(); }
+function hotelPrev() { if (hotelShow) hotelShow.prev(); }
 </script>
+
 </body>
 </html>
