@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Dingo | Creche de cães e hotel - Asa Norte, Brasília</title>
+    <title>Dingo - Hotel, Banho &amp; Creche de cães - Asa Norte, Brasília</title>
     <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -169,7 +169,7 @@
             font-size: 2.6rem;
             color: white;
         }
-        .social-fixed-btn.phone { background: var(--azul-dia); }
+        .social-fixed-btn.whatsapp { background: #25d366; }
         .social-fixed-btn.insta {
             background: radial-gradient(circle at 30% 110%,
                 #fdf497 0%, #fdf497 5%, #fd5949 45%,
@@ -496,7 +496,7 @@
             text-decoration: none;
             transition: transform 0.2s, box-shadow 0.2s;
         }
-        .btn-call { background: var(--azul-dia); color: white; }
+        .btn-call { background: #128c4a; color: white; }
         .btn-i  { background: #d6249f; color: white; }
         .btn-map { background: var(--azul-noite); color: white; }
         .btn-call:hover, .btn-i:hover, .btn-map:hover {
@@ -602,16 +602,47 @@
                 height: 40px;
             }
         }
+
+        /* Fotos novas: stories 9:16 e horizontais 3945 x 2635, sem cortes. */
+        .ciencia-img-box {
+            width: 100%;
+            max-width: 380px;
+            min-height: 0;
+            aspect-ratio: 9 / 16;
+            justify-self: center;
+        }
+        .ciencia-img-box img { height: 100%; object-fit: contain; }
+        .slide { overflow: hidden; isolation: isolate; background: var(--azul-noite); }
+        .slide::before {
+            content: "";
+            position: absolute;
+            inset: -28px;
+            background-image: var(--slide-image);
+            background-size: cover;
+            background-position: center;
+            filter: blur(20px) brightness(0.5);
+            pointer-events: none;
+        }
+        .slide img { position: relative; z-index: 1; object-fit: contain; }
+        .slide-caption { max-width: calc(100% - 32px); white-space: normal; text-align: center; }
+        .hotel-slideshow { max-width: 480px; justify-self: center; }
+        .contact-big-photo { min-height: 0; aspect-ratio: 3945 / 2635; }
+        .contact-big-photo img { height: 100%; object-fit: contain; }
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            .slide { transition: none; }
+        }
     </style>
 </head>
 <body>
 
 <div class="fixed-social">
-    <a href="tel:+5561982426059" class="social-fixed-btn phone" aria-label="Ligar para Dingo">
-        <i class="fas fa-phone-alt"></i>
+    <a href="https://wa.me/5561996116154" class="social-fixed-btn whatsapp" target="_blank"
+       rel="noopener noreferrer" aria-label="Conversar com a Dingo pelo WhatsApp">
+        <i class="fab fa-whatsapp" aria-hidden="true"></i>
     </a>
-    <a href="https://www.instagram.com/dingopet/" target="_blank" class="social-fixed-btn insta"
-       rel="noopener noreferrer" aria-label="Instagram @dingopet">
+    <a href="https://www.instagram.com/dingo.daycare/" target="_blank" class="social-fixed-btn insta"
+       rel="noopener noreferrer" aria-label="Instagram @dingo.daycare">
         <i class="fab fa-instagram"></i>
     </a>
 </div>
@@ -632,7 +663,7 @@
             <img src="https://vifarage1-droid.github.io/DingoSite/Dingo_Horizontal_Preto.png" alt="Dingo"
                  onerror="this.style.display='none'">
         </div>
-        <div class="hero-pill">Creche de cães e hotel</div>
+        <div class="hero-pill">Hotel, Banho &amp; Creche de cães</div>
         <p class="hero-location">🐕 Asa Norte · Brasília – DF</p>
     </div>
 </section>
@@ -666,7 +697,7 @@
             </div>
 
             <div class="ciencia-img-box">
-                <img src="https://vifarage1-droid.github.io/DingoSite/Dog_Brincando_Amarelo.png" alt="Cachorro feliz no Dingo">
+                <img src="https://vifarage1-droid.github.io/DingoSite/2.jpg" alt="Cachorro feliz no Dingo">
                 <span class="img-tag">🐕 Vida boa no Dingo</span>
             </div>
         </div>
@@ -680,23 +711,23 @@
         <div class="title-bar"></div>
 
         <div class="slideshow-container" id="galSlideshow">
-            <div class="slide active" data-label="🌿 Área externa">
-                <img src="https://vifarage1-droid.github.io/DingoSite/Foto%20Creche.jpeg" alt="Área externa">
+            <div class="slide active" data-label="🌿 Área externa" style="--slide-image: url('https://vifarage1-droid.github.io/DingoSite/3.jpg');">
+                <img src="https://vifarage1-droid.github.io/DingoSite/3.jpg" alt="Área externa">
             </div>
-            <div class="slide" data-label="🛏️ Espaço de descanso">
-                <img src="https://vifarage1-droid.github.io/DingoSite/Foto%20Banho.jpeg" alt="Espaço de descanso">
+            <div class="slide" data-label="🛏️ Espaço de descanso" style="--slide-image: url('https://vifarage1-droid.github.io/DingoSite/4.jpg');">
+                <img src="https://vifarage1-droid.github.io/DingoSite/4.jpg" alt="Espaço de descanso">
             </div>
-            <div class="slide" data-label="🐾 Rotina do hotel">
-                <img src="https://vifarage1-droid.github.io/DingoSite/Foto%20Hotel.jpeg" alt="Rotina do hotel">
+            <div class="slide" data-label="🐾 Rotina do hotel" style="--slide-image: url('https://vifarage1-droid.github.io/DingoSite/5.jpg');">
+                <img src="https://vifarage1-droid.github.io/DingoSite/5.jpg" alt="Rotina do hotel">
             </div>
-            <div class="slide" data-label="🏠 Fachada">
-                <img src="https://vifarage1-droid.github.io/DingoSite/Foto%20faixada.jpeg" alt="Fachada">
+            <div class="slide" data-label="🏠 Fachada" style="--slide-image: url('https://vifarage1-droid.github.io/DingoSite/6.jpg');">
+                <img src="https://vifarage1-droid.github.io/DingoSite/6.jpg" alt="Fachada">
             </div>
-            <div class="slide" data-label="👋 Recepção">
-                <img src="https://vifarage1-droid.github.io/DingoSite/Foto%20recep%C3%A7%C3%A3o.jpeg" alt="Recepção">
+            <div class="slide" data-label="👋 Recepção" style="--slide-image: url('https://vifarage1-droid.github.io/DingoSite/7.jpg');">
+                <img src="https://vifarage1-droid.github.io/DingoSite/7.jpg" alt="Recepção">
             </div>
-            <div class="slide" data-label="🎾 Hora da brincadeira">
-                <img src="https://vifarage1-droid.github.io/DingoSite/Dog_Pulando_Amarelo.png" alt="Hora da brincadeira">
+            <div class="slide" data-label="🎾 Hora da brincadeira" style="--slide-image: url('https://vifarage1-droid.github.io/DingoSite/8.jpg');">
+                <img src="https://vifarage1-droid.github.io/DingoSite/8.jpg" alt="Hora da brincadeira">
             </div>
 
             <div class="slide-caption" id="galCaption">🌿 Área externa</div>
@@ -767,14 +798,14 @@
             </div>
 
             <div class="hotel-slideshow" id="hotelSlideshow">
-                <div class="slide active" data-label="🛏️ Suíte">
-                    <img src="https://vifarage1-droid.github.io/DingoSite/Foto%20Hotel.jpeg" alt="Suíte hotel">
+                <div class="slide active" data-label="🛏️ Suíte" style="--slide-image: url('https://vifarage1-droid.github.io/DingoSite/9.jpg');">
+                    <img src="https://vifarage1-droid.github.io/DingoSite/9.jpg" alt="Suíte hotel">
                 </div>
-                <div class="slide" data-label="🌙 Descanso">
-                    <img src="https://vifarage1-droid.github.io/DingoSite/Foto%20faixada.jpeg" alt="Área de descanso">
+                <div class="slide" data-label="🌙 Descanso" style="--slide-image: url('https://vifarage1-droid.github.io/DingoSite/10.jpg');">
+                    <img src="https://vifarage1-droid.github.io/DingoSite/10.jpg" alt="Área de descanso">
                 </div>
-                <div class="slide" data-label="🐾 Brincadeira">
-                    <img src="https://vifarage1-droid.github.io/DingoSite/Foto%20Creche.jpeg" alt="Pets brincando">
+                <div class="slide" data-label="🐾 Brincadeira" style="--slide-image: url('https://vifarage1-droid.github.io/DingoSite/11.jpg');">
+                    <img src="https://vifarage1-droid.github.io/DingoSite/11.jpg" alt="Pets brincando">
                 </div>
 
                 <div class="slide-caption" id="hotelCaption">🛏️ Suíte</div>
@@ -811,33 +842,27 @@
     <div>
         <div class="cr-label">WhatsApp</div>
         <div class="cr-value">
-            <a href="https://wa.me/5561982426059"
-               target="_blank"
+            <a href="https://wa.me/5561996116154"
+               target="_blank" rel="noopener noreferrer"
                style="color:inherit;text-decoration:none;font-weight:700;">
-               (61) 98242-6059
+               (61) 99611-6154
             </a>
         </div>
     </div>
 </div>
-                    </div>
-                </div>
                 <div class="contact-row">
                     <i class="fab fa-instagram" style="color:#d6249f;"></i>
                     <div>
                         <div class="cr-label">Instagram</div>
-                        <div class="cr-value">@dingopet</div>
+                        <div class="cr-value"><a href="https://www.instagram.com/dingo.daycare/" target="_blank" rel="noopener noreferrer" style="color:inherit;">@dingo.daycare</a></div>
                     </div>
                 </div>
 
                 <div class="hours-box">
                     <h4>⏰ Horário de funcionamento</h4>
                     <div class="hours-row">
-                        <span class="day">Creche &amp; banho – seg a sex</span>
+                        <span class="day">Banho &amp; creche – seg a sex</span>
                         <span class="time">07:30h – 18:30h</span>
-                    </div>
-                    <div class="hours-row">
-                        <span class="day">Sábado</span>
-                        <span class="time">24h · sob reserva</span>
                     </div>
                     <div class="hours-row">
                         <span class="day">Hotel</span>
@@ -846,12 +871,12 @@
                 </div>
 
                 <div class="cta-btns">
-                    <a href="tel:+5561982426059" class="btn-call">
-                        <i class="fas fa-phone-alt"></i> Ligar agora
+                    <a href="https://wa.me/5561996116154" class="btn-call" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-whatsapp" aria-hidden="true"></i> WhatsApp
                     </a>
-                    <a href="https://www.instagram.com/dingopet/" target="_blank" class="btn-i"
+                    <a href="https://www.instagram.com/dingo.daycare/" target="_blank" class="btn-i"
                        rel="noopener noreferrer">
-                        <i class="fab fa-instagram"></i> @dingopet
+                        <i class="fab fa-instagram"></i> @dingo.daycare
                     </a>
                     <a href="https://www.google.com/maps/search/?api=1&query=SHCGN+Quadra+710%2F711+Bloco+G+Loja+33+Brasília"
                        target="_blank" class="btn-map" rel="noopener noreferrer">
@@ -861,7 +886,7 @@
             </div>
 
             <div class="contact-big-photo">
-                <img src="https://vifarage1-droid.github.io/DingoSite/Foto%20faixada.jpeg" alt="Fachada Dingo">
+                <img src="https://vifarage1-droid.github.io/DingoSite/3.jpg" alt="Espaço Dingo" loading="lazy">
             </div>
         </div>
 
@@ -878,7 +903,7 @@
 
 <footer>
     <span class="paw">🐾</span>
-    <strong>Dingo · Creche de cães e hotel</strong><br>
+    <strong>Dingo - Hotel, Banho &amp; Creche de cães</strong><br>
     Amor e cuidado que seu pet merece · Asa Norte, Brasília – DF<br>
     © 2026 Dingo — liberdade, diversão e amigos todos os dias.
 </footer>
@@ -940,4 +965,3 @@ function hotelPrev() { if (hotelShow) hotelShow.prev(); }
 
 </body>
 </html>
-
