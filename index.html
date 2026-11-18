@@ -970,30 +970,5 @@ function galPrev() { if (galShow) galShow.prev(); }
 function hotelNext() { if (hotelShow) hotelShow.next(); }
 function hotelPrev() { if (hotelShow) hotelShow.prev(); }
 
-/*
- * Google Ads - conversão "Contato"
- * Registra uma conversão quando o visitante clica em qualquer link do WhatsApp.
- * Os links já abrem em nova aba; por isso, não usamos event_callback para
- * redirecionar a página atual e não interrompemos a navegação normal.
- */
-function gtag_report_conversion() {
-    if (typeof gtag === 'function') {
-        gtag('event', 'conversion', {
-            'send_to': 'AW-18536984237/mSX7CNb55qsdEK3dj4dF',
-            'value': 1.0,
-            'currency': 'BRL'
-        });
-    }
-    return true;
-}
-
-// Aplica o acompanhamento aos links wa.me existentes no site.
-document.querySelectorAll('a[href*="wa.me/"]').forEach(function(link) {
-    link.addEventListener('click', function() {
-        gtag_report_conversion();
-    });
-});
-</script>
-
 </body>
 </html>
